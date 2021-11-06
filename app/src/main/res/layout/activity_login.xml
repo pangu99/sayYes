@@ -27,20 +27,23 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/already"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="20dp"
                     android:text="Already\nhave\nan\naccount?"
                     android:textColor="@color/darkBlack"
-                    android:textSize="30dp" />
+                    android:textSize="30dp"
+                    android:textStyle="bold"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
+                    android:layout_alignLeft="@+id/already"
                     android:layout_marginTop="-30dp"
-                    android:layout_marginRight="-12dp"
+                    android:layout_marginLeft="200dp"
                     android:src="@drawable/icon_transparent" />
             </RelativeLayout>
 
@@ -85,7 +88,20 @@
                     android:text="LOGIN"
                     android:textSize="30dp"
                     android:textColor="@color/black"
-                    android:background="@drawable/button_layout"/>
+                    android:background="@drawable/button_layout"
+                    android:onClick="toHome"/>
+
+                <TextView
+                    android:id="@+id/newUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="280dp"
+                    android:gravity="end"
+                    android:text="New User? Register Now"
+                    android:textColor="#939391"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:onClick="toRegister"/>
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>

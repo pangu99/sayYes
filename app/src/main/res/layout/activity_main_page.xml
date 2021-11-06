@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainPage">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="60dp"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:id="@+id/firstRowImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="10">
+
+                <ImageView
+                    android:id="@+id/image1"
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_weight="5"
+                    app:srcCompat="@drawable/proposal2" />
+
+                <ImageView
+                    android:id="@+id/image2"
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_weight="5"
+                    app:srcCompat="@drawable/proposal1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/firstRowText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/firstRowImage"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:background="@drawable/button_layout"
+                    android:text="Proposal on the lake\n#lake" />
+
+                <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:background="@drawable/button_layout"
+                    android:text="Proposal in Madison\n#Madison" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/secondRowImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/firstRowText"
+                android:weightSum="10">
+
+                <ImageView
+                    android:id="@+id/image3"
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_weight="5"
+                    app:srcCompat="@drawable/proposal3" />
+
+                <ImageView
+                    android:id="@+id/image4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    app:srcCompat="@drawable/proposal4" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/secondRowText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/secondRowImage"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:background="@drawable/button_layout"
+                    android:text="SHE SAID YEES!\n#romantic" />
+
+                <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:background="@drawable/button_layout"
+                    android:text="Surprise proposal\n#surprise" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/thirdRowImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/secondRowText"
+                android:weightSum="10">
+
+                <ImageView
+                    android:id="@+id/image5"
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_weight="5"
+                    app:srcCompat="@drawable/proposal5" />
+
+                <ImageView
+                    android:id="@+id/image6"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    app:srcCompat="@drawable/proposal6" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/thirdRowText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/thirdRowImage"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:background="@drawable/button_layout"
+                    android:text="Proposal at disney!\n#dreaming" />
+
+                <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:background="@drawable/button_layout"
+                    android:text="Proposal in restaurant\n#yummy" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
