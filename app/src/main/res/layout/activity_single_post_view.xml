@@ -44,7 +44,6 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginLeft="50dp"
                     android:layout_marginTop="0dp"
-                    android:background="null"
                     android:maxLines="1"
                     android:text="sample author" />
 
@@ -187,7 +186,6 @@
                     android:layout_marginTop="0dp"
                     android:linksClickable="true"
                     android:onClick="openGoogleMaps"
-                    android:background="null"
                     android:ems="10"
                     android:inputType="textPostalAddress"
                     android:text="777 University Avenue, Madison, WI, USA"
