@@ -21,7 +21,7 @@ public class ProfileActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.main_menu);
         bottomNavigationView.setOnItemSelectedListener(bottomNavFunction);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new ProfileFragment()).commit();
     }
 
     private NavigationBarView.OnItemSelectedListener bottomNavFunction = new NavigationBarView.OnItemSelectedListener() {
@@ -36,7 +36,7 @@ public class ProfileActivity extends AppCompatActivity {
                     fragment = new HomeFragment(); // TODO
                     break;
                 case R.id.person:
-                    fragment = new HomeFragment(); // TODO
+                    fragment = new ProfileFragment(); // TODO
                     break;
             }
 

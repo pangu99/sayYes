@@ -36,7 +36,7 @@ public class HomeActivity extends AppCompatActivity {
                     fragment = new HomeFragment(); // TODO
                     break;
                 case R.id.person:
-                    fragment = new HomeFragment(); // TODO
+                    fragment = new ProfileFragment(); // TODO
                     break;
             }
 
