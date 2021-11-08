@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SinglePostView">
+
+
+    <EditText
+        android:id="@+id/sampleTitle"
+        android:layout_width="320dp"
+        android:layout_height="49dp"
+        android:layout_marginEnd="84dp"
+        android:layout_marginBottom="238dp"
+        android:background="@null"
+        android:clickable="false"
+        android:ems="10"
+        android:inputType="text"
+        android:isScrollContainer="true"
+        android:minHeight="50dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/samplePost" />
+
+    <ImageView
+        android:id="@+id/WriterAvatar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="378dp"
+        app:layout_constraintBottom_toTopOf="@+id/sampleTitle"
+        app:layout_constraintEnd_toStartOf="@+id/authorPost"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <EditText
+        android:id="@+id/authorPost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="146dp"
+        android:background="@null"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/WriterAvatar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/WriterAvatar" />
+
+    <ImageView
+        android:id="@+id/samplePost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="298dp"
+        android:adjustViewBounds="true"
+        android:clickable="false"
+        android:cropToPadding="false"
+        android:isScrollContainer="true"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/WriterAvatar"
+        app:layout_constraintTop_toBottomOf="@+id/WriterAvatar"
+        app:srcCompat="@drawable/_9e38bdf_2764_4ec2_b8c8_8f8cc387d031_1_105_c" />
+
+    <ImageView
+        android:id="@+id/likeButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="250dp"
+        android:clickable="true"
+        android:onClick="likeFunc"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/samplePost"
+        app:srcCompat="@drawable/ic_baseline_thumb_up_24" />
+
+    <TextView
+        android:id="@+id/likeCount"
+        android:layout_width="40dp"
+        android:layout_height="17dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="230dp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/likeButton" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
