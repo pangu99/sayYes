@@ -34,16 +34,16 @@
                     android:text="Already\nhave\nan\naccount?"
                     android:textColor="@color/darkBlack"
                     android:textSize="30dp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/already"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
-                    android:layout_alignLeft="@+id/already"
-                    android:layout_marginTop="-30dp"
                     android:layout_marginLeft="200dp"
+                    android:layout_marginTop="-30dp"
                     android:src="@drawable/icon_transparent" />
             </RelativeLayout>
 

@@ -1,130 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/white"
     tools:context=".SinglePostView">
 
-
-    <EditText
-        android:id="@+id/sampleTitle"
-        android:layout_width="320dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="84dp"
-        android:layout_marginBottom="210dp"
-        android:background="@null"
-        android:clickable="false"
-        android:ems="10"
-        android:inputType="text"
-        android:isScrollContainer="true"
-        android:minHeight="50dp"
-        android:text=""
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/samplePost"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <ImageView
-        android:id="@+id/WriterAvatar"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="378dp"
-        app:layout_constraintBottom_toTopOf="@+id/sampleTitle"
-        app:layout_constraintEnd_toStartOf="@+id/authorPost"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <EditText
-        android:id="@+id/authorPost"
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="146dp"
-        android:layout_marginBottom="16dp"
-        android:background="@null"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:text=""
-        app:layout_constraintBottom_toBottomOf="@+id/WriterAvatar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/WriterAvatar"
-        tools:ignore="SpeakableTextPresentCheck" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:paddingTop="10dp">
 
-    <ImageView
-        android:id="@+id/samplePost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="298dp"
-        android:adjustViewBounds="true"
-        android:clickable="false"
-        android:cropToPadding="false"
-        android:isScrollContainer="true"
-        android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/WriterAvatar"
-        app:layout_constraintTop_toBottomOf="@+id/WriterAvatar"
-        app:srcCompat="@drawable/_9e38bdf_2764_4ec2_b8c8_8f8cc387d031_1_105_c" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/likeButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="230dp"
-        android:clickable="true"
-        android:onClick="likeFunc"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/samplePost"
-        app:srcCompat="@drawable/ic_baseline_thumb_up_24"
-        tools:ignore="SpeakableTextPresentCheck" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="65dp">
 
-    <TextView
-        android:id="@+id/likeCount"
-        android:layout_width="48dp"
-        android:layout_height="17dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="210dp"
-        android:text=""
-        android:ems="10"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/likeButton" />
+                <ImageView
+                    android:id="@+id/WriterAvatar"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    tools:srcCompat="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/tags_of_post"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="7dp"
-        android:text=""
-        android:ems="10"
-        android:inputType="text"
-        android:textAlignment="viewStart"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sampleTitle" />
+                <EditText
+                    android:id="@+id/authorPost"
+                    android:layout_width="350dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignLeft="@+id/WriterAvatar"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="0dp"
+                    android:background="null"
+                    android:maxLines="1"
+                    android:text="sample author" />
 
-    <EditText
-        android:id="@+id/post_location"
-        android:layout_width="290dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="8dp"
-        android:background="@null"
-        android:ems="10"
-        android:inputType="textPostalAddress"
-        android:minHeight="48dp"
-        android:text=""
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tags_of_post" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/samplePost"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:adjustViewBounds="true"
+                    android:clickable="false"
+                    android:cropToPadding="false"
+                    android:isScrollContainer="true"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/_9e38bdf_2764_4ec2_b8c8_8f8cc387d031_1_105_c" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/sampleTitle"
+                    android:layout_width="320dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:background="@null"
+                    android:clickable="false"
+                    android:ems="10"
+                    android:inputType="textMultiLine"
+                    android:maxLines="2"
+                    android:minHeight="50dp"
+                    android:text="Sample Title: This title can have multiple lines: max 2 lines"
+                    android:textSize="20sp"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <ImageView
+                    android:id="@+id/likeButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignLeft="@+id/sampleTitle"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="340dp"
+                    android:layout_marginRight="20dp"
+                    android:clickable="true"
+                    android:onClick="likeFunc"
+                    app:srcCompat="@drawable/ic_baseline_thumb_up_24"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/likeCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/likeButton"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="340dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="1dp"
+                    android:ems="10"
+                    android:text="1234"
+                    android:textAlignment="center" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tags_of_post"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:ems="10"
+                    android:inputType="textMultiLine"
+                    android:maxLines="3"
+                    android:minHeight="45dp"
+                    android:text="#sample_tag #tag_layout_will_size_dynamically\n#another_tag\n#three_lines_of_tag_maximum"
+                    android:textAlignment="viewStart"
+                    android:textColor="#000000"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/location_vector"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginBottom="0dp"
+                    app:srcCompat="@drawable/ic_baseline_location_on_24" />
+
+                <EditText
+                    android:id="@+id/post_location"
+                    android:layout_width="350dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignLeft="@+id/location_vector"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="0dp"
+                    android:background="null"
+                    android:ems="10"
+                    android:inputType="textPostalAddress"
+                    android:text="777 University Avenue, Madison, WI, USA"
+                    android:textSize="15sp"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            </RelativeLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
