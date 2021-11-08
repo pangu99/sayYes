@@ -57,7 +57,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/samplePost"
+                    android:id="@+id/samplePicture"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="0dp"
@@ -77,14 +77,16 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="5dp"
                 android:orientation="vertical">
 
                 <EditText
                     android:id="@+id/sampleTitle"
-                    android:layout_width="320dp"
+                    android:layout_width="300dp"
                     android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
                     android:layout_marginStart="0dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="0dp"
@@ -93,21 +95,21 @@
                     android:clickable="false"
                     android:ems="10"
                     android:inputType="textMultiLine"
-                    android:maxLines="2"
-                    android:minHeight="50dp"
-                    android:text="Sample Title: This title can have multiple lines: max 2 lines"
-                    android:textSize="20sp"
+                    android:maxLines="3"
+                    android:text="Sample Title: This title can have multiple lines: max 3 lines\nthrid line"
+                    android:textSize="15sp"
                     tools:ignore="SpeakableTextPresentCheck" />
 
                 <ImageView
                     android:id="@+id/likeButton"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignLeft="@+id/sampleTitle"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginLeft="340dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="300dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginRight="0dp"
                     android:clickable="true"
                     android:onClick="likeFunc"
                     app:srcCompat="@drawable/ic_baseline_thumb_up_24"
@@ -118,10 +120,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/likeButton"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="340dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginBottom="1dp"
+                    android:layout_marginLeft="300dp"
+                    android:layout_marginBottom="7dp"
                     android:ems="10"
                     android:text="1234"
                     android:textAlignment="center" />
@@ -191,7 +193,41 @@
                     tools:ignore="SpeakableTextPresentCheck" />
             </RelativeLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/samplePost"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@null"
+                    android:clickable="false"
+                    android:ems="10"
+                    android:inputType="textMultiLine"
+                    android:minHeight="50dp"
+                    android:minLines="1"
+                    android:text="On the way back from visiting their families on Christmas night, Taylor confessed he was having trouble finding the perfect vintage engagement ring. When they got home, he told her to wait in the car while he ran upstairs to their apartment. When she got inside, he was on one knee surrounded by sticky notes (an inside joke) in the shape of a heart on the floor. Each little note included a handwritten message telling her how much he loved her. The next day, they went shopping together to pick out a ring."
+                    android:textSize="15sp"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+            </RelativeLayout>
+
 
         </LinearLayout>
     </ScrollView>
+
+    <EditText
+        android:id="@+id/editTextTextMultiLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine" />
 </RelativeLayout>
