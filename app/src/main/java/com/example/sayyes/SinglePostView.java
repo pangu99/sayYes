@@ -33,4 +33,8 @@ public class SinglePostView extends AppCompatActivity {
     public void likeFunc(View view) {
 
     }
+
+
+    public void openGoogleMaps(View view) {
+    }
 }
