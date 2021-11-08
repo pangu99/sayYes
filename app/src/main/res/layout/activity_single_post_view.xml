@@ -10,19 +10,21 @@
     <EditText
         android:id="@+id/sampleTitle"
         android:layout_width="320dp"
-        android:layout_height="49dp"
+        android:layout_height="50dp"
         android:layout_marginEnd="84dp"
-        android:layout_marginBottom="238dp"
+        android:layout_marginBottom="210dp"
         android:background="@null"
         android:clickable="false"
         android:ems="10"
         android:inputType="text"
         android:isScrollContainer="true"
         android:minHeight="50dp"
+        android:text=""
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/samplePost" />
+        app:layout_constraintTop_toBottomOf="@+id/samplePost"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageView
         android:id="@+id/WriterAvatar"
@@ -40,13 +42,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="146dp"
+        android:layout_marginBottom="16dp"
         android:background="@null"
         android:ems="10"
         android:inputType="textPersonName"
         android:minHeight="48dp"
+        android:text=""
         app:layout_constraintBottom_toBottomOf="@+id/WriterAvatar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/WriterAvatar" />
+        app:layout_constraintStart_toEndOf="@+id/WriterAvatar"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageView
         android:id="@+id/samplePost"
@@ -65,28 +70,61 @@
 
     <ImageView
         android:id="@+id/likeButton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginEnd="18dp"
-        android:layout_marginBottom="250dp"
+        android:layout_marginBottom="230dp"
         android:clickable="true"
         android:onClick="likeFunc"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/samplePost"
-        app:srcCompat="@drawable/ic_baseline_thumb_up_24" />
+        app:srcCompat="@drawable/ic_baseline_thumb_up_24"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/likeCount"
-        android:layout_width="40dp"
+        android:layout_width="48dp"
         android:layout_height="17dp"
         android:layout_marginEnd="18dp"
-        android:layout_marginBottom="230dp"
+        android:layout_marginBottom="210dp"
+        android:text=""
+        android:ems="10"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/likeButton" />
 
+    <TextView
+        android:id="@+id/tags_of_post"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="7dp"
+        android:text=""
+        android:ems="10"
+        android:inputType="text"
+        android:textAlignment="viewStart"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sampleTitle" />
+
+    <EditText
+        android:id="@+id/post_location"
+        android:layout_width="290dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:ems="10"
+        android:inputType="textPostalAddress"
+        android:minHeight="48dp"
+        android:text=""
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tags_of_post" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
