@@ -30,4 +30,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
+
+    public void toHome(View view) {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
 }

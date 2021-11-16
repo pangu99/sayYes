@@ -48,7 +48,8 @@
             android:text=" Skip for now "
             android:textAlignment="center"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:onClick="toHome"/>
 
         <View
             android:layout_width="0dp"

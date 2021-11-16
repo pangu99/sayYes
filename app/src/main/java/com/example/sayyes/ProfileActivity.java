@@ -4,31 +4,24 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.google.android.material.navigation.NavigationBarView;
 
-public class HomeActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
     private NavigationBarView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_profile);
 
         bottomNavigationView = findViewById(R.id.main_menu);
         bottomNavigationView.setOnItemSelectedListener(bottomNavFunction);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
-    }
-
-    public void toSearch(View view) {
-        Intent intent = new Intent(this, SearchActivity.class);
-        startActivity(intent);
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new ProfileFragment()).commit();
     }
 
     private NavigationBarView.OnItemSelectedListener bottomNavFunction = new NavigationBarView.OnItemSelectedListener() {
@@ -51,4 +44,5 @@ public class HomeActivity extends AppCompatActivity {
             return true;
         }
     };
+
 }
