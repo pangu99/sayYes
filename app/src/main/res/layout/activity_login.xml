@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Email"
                     android:inputType="textEmailAddress"
-                    android:maxLines="1"/>
+                    android:maxLines="1" />
 
                 <EditText
                     android:id="@+id/password"
@@ -84,12 +84,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="180dp"
+                    android:background="@drawable/button_layout"
+                    android:onClick="toHome"
                     android:paddingVertical="20dp"
                     android:text="LOGIN"
-                    android:textSize="30dp"
                     android:textColor="@color/black"
-                    android:background="@drawable/button_layout"
-                    android:onClick="toHome"/>
+                    android:textSize="30dp" />
 
                 <TextView
                     android:id="@+id/newUser"

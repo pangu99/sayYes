@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Name"
                     android:inputType="text"
-                    android:maxLines="1"/>
+                    android:maxLines="1" />
 
                 <EditText
                     android:id="@+id/email"
