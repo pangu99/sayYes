@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "7105395678",
+    "project_id": "sayyes-ca0e9",
+    "storage_bucket": "sayyes-ca0e9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:7105395678:android:87c96451d62b19875dfb4f",
+        "android_client_info": {
+          "package_name": "com.uw.sayyes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "7105395678-029ktkq08ccska0i9jrnfru2qd6b2o0b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCOd-4DhSaLWMX1fgjTD6iI_rBBqahJ4c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "7105395678-029ktkq08ccska0i9jrnfru2qd6b2o0b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

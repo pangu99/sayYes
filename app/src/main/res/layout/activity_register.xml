@@ -81,12 +81,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="180dp"
+                    android:background="@drawable/button_layout"
+                    android:onClick="toHome"
                     android:paddingVertical="20dp"
                     android:text="Register"
-                    android:textSize="30dp"
                     android:textColor="@color/black"
-                    android:background="@drawable/button_layout"
-                    android:onClick="toHome"/>
+                    android:textSize="30dp" />
 
             </RelativeLayout>
         </LinearLayout>

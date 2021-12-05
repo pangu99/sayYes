@@ -1,5 +1,6 @@
 package com.example.sayyes;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -8,8 +9,20 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
+    // login information
+    String emailStr;
+    String passwordStr;
+
+    // firebase authentication
+    FirebaseAuth fAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,15 +34,14 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("com.example.sayyes", Context.MODE_PRIVATE);
 
         if (!sharedPreferences.getString(emailKey, "").equals("") && !sharedPreferences.getString(passwordKey, "").equals("")){
-            String email = sharedPreferences.getString(emailKey, "");
-            String password = sharedPreferences.getString(passwordKey, "");
+            emailStr = sharedPreferences.getString(emailKey, "");
+            passwordStr = sharedPreferences.getString(passwordKey, "");
 
-            goToHomeActivity(email, password);
+            authenticate();
         }
         else {
             setContentView(R.layout.activity_login);
         }
-        // setContentView(R.layout.activity_login);
     }
 
     public void toRegister(View view) {
@@ -50,14 +62,33 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("com.example.sayyes", Context.MODE_PRIVATE);
 
         EditText email = (EditText) findViewById(R.id.email);
-        String emailStr = email.getText().toString();
+        emailStr = email.getText().toString();
 
         EditText password = (EditText) findViewById(R.id.password);
-        String passwordStr = password.getText().toString();
+        passwordStr = password.getText().toString();
 
         sharedPreferences.edit().putString("email", emailStr).apply();
         sharedPreferences.edit().putString("password", passwordStr).apply();
 
-        goToHomeActivity(emailStr, passwordStr);
+        authenticate();
+    }
+
+    public void authenticate(){
+        // firebase authentication
+        fAuth = FirebaseAuth.getInstance();
+
+        // login the user in firebase
+        fAuth.signInWithEmailAndPassword(emailStr, passwordStr).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    Toast.makeText(LoginActivity.this, "Logged In Successfully.", Toast.LENGTH_SHORT).show();
+                    goToHomeActivity(emailStr, passwordStr);
+                } else{
+                    Toast.makeText(LoginActivity.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }
