@@ -28,8 +28,6 @@ public class CreatePost extends AppCompatActivity {
 
         imageView = findViewById(R.id.Image);
 
-
-
         // handle click and launch intent to pick image from gallery
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
