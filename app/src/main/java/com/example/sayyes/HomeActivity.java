@@ -50,7 +50,7 @@ public class HomeActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
                 case R.id.plus:
-                    Log.d(TAG, "ENTER ADD");
+                    Log.d("PRINT", "HIT ADD SUCCESS");
                     Intent intent = new Intent(getApplicationContext(), CreatePost.class);
                     startActivity(intent);
 //                    toCreatePost(); // TODO
