@@ -32,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
     String emailStr;
     String passwordStr;
 
+    // do NOT enable autoLogin if we get MainActivity from LOGOUT
+    String autoLogin;
+
     // firebase authentication
     FirebaseAuth fAuth;
 
@@ -39,12 +42,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Intent intent = getIntent();
+        autoLogin = intent.getStringExtra("autoLogin");
+
         String emailKey = "email";
         String passwordKey = "password";
 
         SharedPreferences sharedPreferences = getSharedPreferences("com.example.sayyes", Context.MODE_PRIVATE);
 
-        if (!sharedPreferences.getString(emailKey, "").equals("") && !sharedPreferences.getString(passwordKey, "").equals("")){
+        if (!sharedPreferences.getString(emailKey, "").equals("") && !sharedPreferences.getString(passwordKey, "").equals("") && (autoLogin==null)){
             emailStr = sharedPreferences.getString(emailKey, "");
             passwordStr = sharedPreferences.getString(passwordKey, "");
 
@@ -81,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void toLogin(View view){
         Intent intent = new Intent(this, LoginActivity.class);
+        intent.putExtra("autoLogin", autoLogin);
         startActivity(intent);
     }
 

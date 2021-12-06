@@ -30,6 +30,9 @@ public class RegisterActivity extends AppCompatActivity {
     EditText email;
     EditText password;
 
+    // do NOT enable autoLogin if we get MainActivity from LOGOUT
+    String autoLogin;
+
     // firebase authentication
     FirebaseAuth fAuth;
 
@@ -48,6 +51,9 @@ public class RegisterActivity extends AppCompatActivity {
         name = findViewById(R.id.name);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
+
+        Intent intent = getIntent();
+        autoLogin = intent.getStringExtra("autoLogin");
 
         // firebase authentication
         fAuth = FirebaseAuth.getInstance();
