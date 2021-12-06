@@ -41,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("PRINT", "ENTER REGISTER");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
@@ -58,6 +59,11 @@ public class RegisterActivity extends AppCompatActivity {
 //        if (fAuth.getCurrentUser() != null){
 //
 //        }
+    }
+
+    public void toCreate(View view){
+        Intent intent = new Intent(this, CreatePost.class);
+        startActivity(intent);
     }
 
 

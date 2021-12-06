@@ -40,20 +40,8 @@
             android:textSize="30dp"
             android:text="ID:123456" />
 
-            <TextView
-                android:id="@+id/newUser"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="280dp"
-                android:onClick="toRegister"
-                android:text="LOGOUT"
-                android:textColor="#939391"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-
 
         </LinearLayout>
-
 
 
 
@@ -65,5 +53,12 @@
 <!--        android:layout_height="wrap_content"-->
 <!--        android:text="Create+"-->
 <!--        android:onClick="toCreatePost"/>-->
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:text="Button" />
 
 </FrameLayout>

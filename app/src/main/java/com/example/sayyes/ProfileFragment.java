@@ -45,6 +45,12 @@ public class ProfileFragment extends Fragment {
 
     }
 
+    public void toRegister(View view) {
+        Log.d("PRINT", "ENTER register");
+        Intent intent = new Intent(getActivity(), RegisterActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +72,16 @@ public class ProfileFragment extends Fragment {
 //            }
 //        });
 
+
+        Button logout = inflatedView.findViewById(R.id.button4);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                Log.d("PRINT", "ENTER register");
+                Intent intent = new Intent(getActivity(), RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // firebase authentication
         fAuth = FirebaseAuth.getInstance();
