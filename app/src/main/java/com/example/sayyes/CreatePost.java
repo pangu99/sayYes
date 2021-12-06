@@ -14,15 +14,24 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 public class CreatePost extends AppCompatActivity {
 
     ImageView imageView;
+    TextInputEditText title;
+    TextInputEditText story;
+    TextInputEditText hashtag;
+    CheckBox isHome;
+    CheckBox isOther;
+    TextInputEditText specification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +39,12 @@ public class CreatePost extends AppCompatActivity {
         setContentView(R.layout.activity_create_post);
 
         imageView = findViewById(R.id.Image);
+        title = findViewById(R.id.title);
+        story = findViewById(R.id.story);
+        hashtag = findViewById(R.id.hashtag);
+        isHome = findViewById(R.id.CheckAtHome);
+        isOther = findViewById(R.id.CheckOtherPlace);
+        specification = findViewById(R.id.specification);
 
         // handle click and launch intent to pick image from gallery
         imageView.setOnClickListener(new View.OnClickListener() {

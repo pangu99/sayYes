@@ -27,7 +27,7 @@ import java.util.concurrent.Executor;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the  factory method to
+ * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class ProfileFragment extends Fragment {
@@ -73,6 +73,15 @@ public class ProfileFragment extends Fragment {
 //        });
 
 
+        Button logout = inflatedView.findViewById(R.id.button4);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                Log.d("PRINT", "ENTER register");
+                Intent intent = new Intent(getActivity(), RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // firebase authentication
         fAuth = FirebaseAuth.getInstance();
