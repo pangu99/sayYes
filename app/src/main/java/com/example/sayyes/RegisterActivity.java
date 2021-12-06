@@ -60,6 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
 //        }
     }
 
+
     public void goToHomeActivity(String email, String password) {
         Intent intent = new Intent(this, HomeActivity.class);
 
