@@ -56,15 +56,15 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         inflatedView = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        Button createPost = inflatedView.findViewById(R.id.tryCreatePost);
-        createPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                Log.d("PRINT", "ENTER create post");
-                Intent intent = new Intent(getActivity(), CreatePost.class);
-                startActivity(intent);
-            }
-        });
+//        Button createPost = inflatedView.findViewById(R.id.tryCreatePost);
+//        createPost.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view){
+//                Log.d("PRINT", "ENTER create post");
+//                Intent intent = new Intent(getActivity(), CreatePost.class);
+//                startActivity(intent);
+//            }
+//        });
 
 
         // firebase authentication
