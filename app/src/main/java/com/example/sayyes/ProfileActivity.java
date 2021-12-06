@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -22,7 +23,7 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
+//        toCreatePost();
         bottomNavigationView = findViewById(R.id.main_menu);
         bottomNavigationView.setOnItemSelectedListener(bottomNavFunction);
 
@@ -34,11 +35,6 @@ public class ProfileActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void toCreatePost(){
-        Log.d(TAG, "ENTER create");
-        Intent intent = new Intent(this, CreatePost.class);
-        startActivity(intent);
-    }
 
     private NavigationBarView.OnItemSelectedListener bottomNavFunction = new NavigationBarView.OnItemSelectedListener() {
         @Override

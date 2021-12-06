@@ -46,16 +46,18 @@ public class HomeActivity extends AppCompatActivity {
             Fragment fragment = null;
             switch (item.getItemId()) {
                 case R.id.home:
+                    Log.d("PRINT", "ENTER HOME");
                     fragment = new HomeFragment();
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;
                 case R.id.plus:
                     Log.d("PRINT", "ENTER ADD");
-                    Intent intent = new Intent(getApplicationContext(), CreatePost.class);
+                    Intent intent = new Intent(HomeActivity.this, CreatePost.class);
                     startActivity(intent);
 //                    toCreatePost(); // TODO
                     break;
                 case R.id.person:
+                    Log.d("PRINT", "ENTER PERSON");
                     fragment = new ProfileFragment(); // TODO
                     getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
                     break;

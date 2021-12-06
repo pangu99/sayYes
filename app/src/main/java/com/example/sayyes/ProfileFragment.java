@@ -2,6 +2,7 @@ package com.example.sayyes;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -53,6 +55,17 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         inflatedView = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        Button createPost = inflatedView.findViewById(R.id.tryCreatePost);
+        createPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                Log.d("PRINT", "ENTER create post");
+                Intent intent = new Intent(getActivity(), CreatePost.class);
+                startActivity(intent);
+            }
+        });
+
 
         // firebase authentication
         fAuth = FirebaseAuth.getInstance();
