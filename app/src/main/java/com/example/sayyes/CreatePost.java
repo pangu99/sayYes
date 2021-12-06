@@ -20,7 +20,6 @@ import android.widget.Toast;
 public class CreatePost extends AppCompatActivity {
 
     ImageView imageView;
-    ActivityResultLauncher<Intent> openGalleryActivityLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,26 +28,7 @@ public class CreatePost extends AppCompatActivity {
 
         imageView = findViewById(R.id.Image);
 
-        openGalleryActivityLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        Log.d("PRINT", "ENTER onActivityResult");
-                        // handle the result of intent
-                        if (result.getResultCode() == Activity.RESULT_OK){
-                            // get uri of picked image
-                            Intent data = result.getData();
-                            Uri imageUri = data.getData();
 
-                            imageView.setImageURI(imageUri);
-                        } else{
-                            // cancelled activity
-                            Toast.makeText(CreatePost.this, "Cancelled picking from gallery.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }
-        );
 
         // handle click and launch intent to pick image from gallery
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -59,10 +39,32 @@ public class CreatePost extends AppCompatActivity {
                 Intent openGallery = new Intent(Intent.ACTION_PICK);
                 // set type
                 openGallery.setType("image/*");
+                openGalleryActivityLauncher.launch(openGallery);
             }
         });
 
     }
+
+    private ActivityResultLauncher<Intent> openGalleryActivityLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            Log.d("PRINT", "ENTER onActivityResult");
+            // handle the result of intent
+            if (result.getResultCode() == Activity.RESULT_OK){
+                // get uri of picked image
+                Intent data = result.getData();
+                Uri imageUri = data.getData();
+
+                imageView.setImageURI(imageUri);
+            } else{
+                // cancelled activity
+                Toast.makeText(CreatePost.this, "Cancelled picking from gallery.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+        );
 
 
     public void postToPublic(View view){
