@@ -181,14 +181,22 @@
                         android:hint="If Other, please specify"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/postButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_alignParentBottom="true"
+                    android:onClick="postToPublic"
+                    android:text="Post" />
+
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 
-<!--    <Button-->
-<!--        android:id="@+id/postButton"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="60dp"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:onClick="postToPublic"-->
-<!--        android:text="Post" />-->
 </RelativeLayout>
