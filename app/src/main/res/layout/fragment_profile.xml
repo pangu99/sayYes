@@ -54,11 +54,5 @@
 <!--        android:text="Create+"-->
 <!--        android:onClick="toCreatePost"/>-->
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="5"
-        android:text="Button" />
 
 </FrameLayout>

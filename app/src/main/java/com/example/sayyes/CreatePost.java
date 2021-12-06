@@ -17,6 +17,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 public class CreatePost extends AppCompatActivity {
 
     ImageView imageView;
@@ -44,25 +47,25 @@ public class CreatePost extends AppCompatActivity {
     }
 
     private ActivityResultLauncher<Intent> openGalleryActivityLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-        @Override
-        public void onActivityResult(ActivityResult result) {
-            Log.d("PRINT", "ENTER onActivityResult");
-            // handle the result of intent
-            if (result.getResultCode() == Activity.RESULT_OK){
-                // get uri of picked image
-                Intent data = result.getData();
-                Uri imageUri = data.getData();
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    Log.d("PRINT", "ENTER onActivityResult");
+                    // handle the result of intent
+                    if (result.getResultCode() == Activity.RESULT_OK){
+                        // get uri of picked image
+                        Intent data = result.getData();
+                        Uri imageUri = data.getData();
 
-                imageView.setImageURI(imageUri);
-            } else{
-                // cancelled activity
-                Toast.makeText(CreatePost.this, "Cancelled picking from gallery.", Toast.LENGTH_SHORT).show();
+                        imageView.setImageURI(imageUri);
+                    } else{
+                        // cancelled activity
+                        Toast.makeText(CreatePost.this, "Cancelled picking from gallery.", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
-        }
-    }
-        );
+    );
 
 
     public void postToPublic(View view){
