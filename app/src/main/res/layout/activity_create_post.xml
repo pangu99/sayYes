@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:background="@color/white"
-    tools:context=".SinglePostView">
+    tools:context=".CreatePost">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
                 android:layout_height="200dp">
 
                 <ImageView
-                    android:id="@+id/WriterAvatar"
+                    android:id="@+id/Image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentLeft="true"
@@ -189,5 +189,6 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
+        android:onClick="postToPublic"
         android:text="Post" />
 </RelativeLayout>

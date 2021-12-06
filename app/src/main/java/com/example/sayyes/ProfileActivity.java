@@ -1,11 +1,14 @@
 package com.example.sayyes;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -28,6 +31,12 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void toRegister(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+    }
+
+    public void toCreatePost(){
+        Log.d(TAG, "ENTER create");
+        Intent intent = new Intent(this, CreatePost.class);
         startActivity(intent);
     }
 

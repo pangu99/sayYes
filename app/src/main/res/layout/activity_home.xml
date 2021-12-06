@@ -12,12 +12,11 @@
         android:id="@+id/container"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/main_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/main_menu"
         android:layout_alignParentBottom="true"
         android:background="?android:attr/windowBackground"
-        app:menu="@menu/main_menu"
-        />
+        app:menu="@menu/main_menu" />
 
 </RelativeLayout>
