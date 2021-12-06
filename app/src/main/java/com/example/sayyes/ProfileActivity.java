@@ -13,10 +13,19 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ProfileActivity extends AppCompatActivity {
 
     private NavigationBarView bottomNavigationView;
+
+    // firebase authentication
+    FirebaseAuth fAuth;
+
+    // firebase user information storage
+    FirebaseFirestore fStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +34,12 @@ public class ProfileActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.main_menu);
         bottomNavigationView.setOnItemSelectedListener(bottomNavFunction);
+
+        // firebase authentication
+        fAuth = FirebaseAuth.getInstance();
+
+        // firebase storage
+        fStore = FirebaseFirestore.getInstance();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new ProfileFragment()).commit();
     }

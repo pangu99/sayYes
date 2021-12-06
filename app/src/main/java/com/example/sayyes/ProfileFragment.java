@@ -2,13 +2,19 @@ package com.example.sayyes;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import android.content.SharedPreferences;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -18,7 +24,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -38,6 +46,8 @@ public class ProfileFragment extends Fragment {
 
     View inflatedView = null;
     String userID;
+
+    ImageView profileImage;
 
     // firebase authentication
     FirebaseAuth fAuth;
@@ -66,16 +76,19 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         inflatedView = inflater.inflate(R.layout.fragment_profile, container, false);
 
-//        Button createPost = inflatedView.findViewById(R.id.tryCreatePost);
-//        createPost.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view){
-//                Log.d("PRINT", "ENTER create post");
-//                Intent intent = new Intent(getActivity(), CreatePost.class);
-//                startActivity(intent);
-//            }
-//        });
-
+        profileImage = inflatedView.findViewById(R.id.profilePicture);
+        // handle click and launch intent to pick image from gallery
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                Log.d("PRINT", "ENTER onclick");
+                // intent to pick image from gallery
+                Intent openGallery = new Intent(Intent.ACTION_PICK);
+                // set type
+                openGallery.setType("image/*");
+                openGalleryActivityLauncher.launch(openGallery);
+            }
+        });
 
         Button logout = inflatedView.findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
@@ -114,13 +127,36 @@ public class ProfileFragment extends Fragment {
         // fetch user data from storage using userID
         DocumentReference documentReference = fStore.collection("users").document(userID);
         documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
                 Log.d(TAG, "set profile");
                 name.setText(documentSnapshot.getString("name"));
                 //id.setText(userID);
             }
+
         });
     }
+
+    private ActivityResultLauncher<Intent> openGalleryActivityLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    Log.d("PRINT", "ENTER onActivityResult");
+                    // handle the result of intent
+                    if (result.getResultCode() == Activity.RESULT_OK){
+                        // get uri of picked image
+                        Intent data = result.getData();
+                        Uri imageUri = data.getData();
+
+                        profileImage.setImageURI(imageUri);
+                    } else{
+                        // cancelled activity
+                        Toast.makeText(getActivity(), "Cancelled picking from gallery.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+    );
 
 }

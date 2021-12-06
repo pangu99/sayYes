@@ -1,5 +1,7 @@
 package com.example.sayyes;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +23,7 @@ public class Post {
         this.postHashtags = postHashtags;
         this.isHome = isHome;
         this.locationDescription = locationDescription;
+        Log.d("PRINT", "POST object created");
     }
 
     public String getPostID() {
