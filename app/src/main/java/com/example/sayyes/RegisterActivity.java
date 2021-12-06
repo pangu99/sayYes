@@ -5,7 +5,9 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -103,6 +105,12 @@ public class RegisterActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(passwordStr)){
             password.setError("Password is required.");
         }
+
+        // add information into shared preferences
+        SharedPreferences sharedPreferences = getSharedPreferences("com.example.sayyes", Context.MODE_PRIVATE);
+
+        sharedPreferences.edit().putString("email", emailStr).apply();
+        sharedPreferences.edit().putString("password", passwordStr).apply();
 
         // Register the user in firebase
         fAuth.createUserWithEmailAndPassword(emailStr, passwordStr).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
