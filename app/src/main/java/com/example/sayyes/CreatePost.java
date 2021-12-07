@@ -180,7 +180,9 @@ public class CreatePost extends AppCompatActivity {
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
                 String emailStr = documentSnapshot.getString("email");
                 ArrayList<String> postIDs = (ArrayList<String>) documentSnapshot.get("postIDs");
-                postID = emailStr + "_" + postIDs.size();
+                Double numPosts = documentSnapshot.getDouble("numPosts");
+                Integer temp = numPosts.intValue();
+                postID = temp.toString();
 
                 sendPost(postID);
             }
@@ -195,7 +197,7 @@ public class CreatePost extends AppCompatActivity {
 
         // store user information into storage
         userID = fAuth.getCurrentUser().getUid();
-        DocumentReference documentReference = fStore.collection("posts").document(postID);
+        DocumentReference documentReference = fStore.collection(userID).document(postID);
         Post post = new Post(postID, postTitle, postStory, postHashtags, isHome, locationDescription);
 
         // store images in storage
@@ -266,6 +268,7 @@ public class CreatePost extends AppCompatActivity {
 
     public void goToProfileActivity(){
         Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra("updateNum", "Yes");
         startActivity(intent);
     }
 }

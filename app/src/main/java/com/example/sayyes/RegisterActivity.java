@@ -128,6 +128,7 @@ public class RegisterActivity extends AppCompatActivity {
                     user.put("name", nameStr);
                     user.put("email", emailStr);
                     user.put("postIDs", new ArrayList<String>());
+                    user.put("numPosts", new Double(0));
                     documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {

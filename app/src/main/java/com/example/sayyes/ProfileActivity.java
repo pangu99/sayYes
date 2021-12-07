@@ -15,6 +15,8 @@ import android.view.View;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -40,6 +42,14 @@ public class ProfileActivity extends AppCompatActivity {
 
         // firebase storage
         fStore = FirebaseFirestore.getInstance();
+
+        Intent intent = getIntent();
+        String update = intent.getStringExtra("updateNum");
+        if (update != null){
+            String userID = fAuth.getCurrentUser().getUid();
+            DocumentReference documentReference = fStore.collection("users").document(userID);
+            documentReference.update("numPosts", FieldValue.increment(1));
+        }
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new ProfileFragment()).commit();
     }
