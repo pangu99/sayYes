@@ -34,11 +34,11 @@
             android:text="Name" />
 
             <TextView
-            android:id="@+id/ID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30dp"
-            android:text="ID:123456" />
+                android:id="@+id/ID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID:123456"
+                android:textSize="10dp" />
 
             <Button
                 android:id="@+id/logout"

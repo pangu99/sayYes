@@ -57,7 +57,6 @@ public class CreatePost extends AppCompatActivity {
     TextInputEditText story;
     TextInputEditText hashtag;
     CheckBox isHomeCheck;
-    CheckBox isOtherCheck;
     TextInputEditText specification;
 
     // firebase authentication
@@ -158,19 +157,14 @@ public class CreatePost extends AppCompatActivity {
 
     // create a Post object and store it into Firebase storage
     public void postToPublic(View view){
-        Log.d("PRINT", "ENTER postToPublic");
 
         // get post basic infor
         postTitle = title.getText().toString();
         postStory = story.getText().toString();
-
-        Log.d("PRINT", "GOT basic info1");
-
         isHome = isHomeCheck.isChecked();
         locationDescription = specification.getText().toString();
 
-        Log.d("PRINT", "GOT basic info");
-
+        // process hashtag into arraylist
         String postHashtags_raw = hashtag.getText().toString();
         postHashtags = new ArrayList<>();
         processHashtags(postHashtags_raw);
@@ -178,52 +172,20 @@ public class CreatePost extends AppCompatActivity {
         // get current userID from authentication
         userID = fAuth.getCurrentUser().getUid();
 
-        Log.d("PRINT", "GOT userID");
-
         // fetch user data from storage using userID
         DocumentReference documentReference = fStore.collection("users").document(userID);
         documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
 
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
-                Log.d(TAG, "set profile");
-                //id.setText(userID);
                 String emailStr = documentSnapshot.getString("email");
                 ArrayList<String> postIDs = (ArrayList<String>) documentSnapshot.get("postIDs");
                 postID = emailStr + "_" + postIDs.size();
-                Log.d("PRINT", "postID: " + postID);
 
                 sendPost(postID);
             }
 
         });
-
-        Log.d("PRINT", "postID_outside: " + postID);
-
-//        // fetch user data from storage using userID
-//        DocumentReference documentReference_fetch = fStore.collection("users").document(userID);
-//        Log.d("PRINT", "USERID: "+userID);
-//        documentReference_fetch.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-//
-//            @Override
-//            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
-//                Log.d("PRINT", "fetching user data");
-//
-//                String emailStr = documentSnapshot.getString("email");
-//                ArrayList<String> postIDs = (ArrayList<String>) documentSnapshot.get("postIDs");
-//                postID = emailStr + "_" + postIDs.size();
-//
-//            }
-//        });
-//
-//        DocumentReference documentReference_store = fStore.collection("posts").document(postID);
-//        Post post = new Post(postID, postImage, postTitle, postStory, postHashtags, isHome, locationDescription);
-//        documentReference_store.set(post).addOnSuccessListener(new OnSuccessListener<Void>() {
-//            @Override
-//            public void onSuccess(Void unused) {
-//                Log.d(TAG, "onSuccess: post " + postID + "has been posted to public. ");
-//            }
-//        });
 
         goToProfileActivity();
     }
@@ -234,15 +196,7 @@ public class CreatePost extends AppCompatActivity {
         // store user information into storage
         userID = fAuth.getCurrentUser().getUid();
         DocumentReference documentReference = fStore.collection("posts").document(postID);
-        Map<String, Object> post = new HashMap<>();
-//        post.put("name", "nameStr");
-//        post.put("email", "emailStr");
-//        post.put("postIDs", new ArrayList<String>());
-        post.put("title", postTitle);
-        post.put("story", postStory);
-        post.put("postID", postID);post.put("hastags", postHashtags);
-        post.put("isHome", "NO");
-        post.put("locationDescription", locationDescription);
+        Post post = new Post(postID, postTitle, postStory, postHashtags, isHome, locationDescription);
 
         // store images in storage
         StorageReference imageRef = storageRef.child(postID + ".jpg");
@@ -263,28 +217,6 @@ public class CreatePost extends AppCompatActivity {
                 Log.d(TAG, "onSuccess: user profile is created for " + userID);
             }
         });
-
-//        DocumentReference documentReference_store = fStore.collection("users").document("uGOlli0mAwZHHMcRP46pzrKi2");
-//        // Post post = new Post(postID, postImage, postTitle, postStory, postHashtags, isHome, locationDescription);
-//        Map<String, Object> post = new HashMap<>();
-//        post.put("title", postTitle);
-//        post.put("story", postStory);
-//        post.put("postID", postID);
-//        post.put("hastags", postHashtags);
-//        post.put("isHome", "NO");
-//        post.put("locationDescription", locationDescription);
-//        post.put("imageByteArray", postImage);
-//        documentReference_store.set(post).addOnSuccessListener(new OnSuccessListener<Void>() {
-//            @Override
-//            public void onSuccess(Void unused) {
-//                Log.d("PRINT", "onSuccess: post " + postID + "has been posted to public. ");
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Log.d("PRINT", "onFailure: post " + postID + "did NOT work. ");
-//            }
-//        });
     }
 
     @Override
@@ -321,12 +253,15 @@ public class CreatePost extends AppCompatActivity {
 
     // transform raw hashtags into list of hashtags
     public void processHashtags(String postHashtags_raw){
-        Log.d("PRINT", "ENTER process");
+
         String[] splitted = postHashtags_raw.split("#");
-        Log.d("PRINT", "ENTER lenth" + splitted.length);
-        for (int i=0; i<splitted.length-1; i++){
-            postHashtags.add(splitted[i].trim());
+
+        for (String s : splitted){
+            if (s==null || s.trim().length()==0)
+                continue;
+            postHashtags.add(s.trim());
         }
+
     }
 
     public void goToProfileActivity(){

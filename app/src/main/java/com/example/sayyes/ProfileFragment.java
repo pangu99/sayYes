@@ -28,13 +28,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.concurrent.Executor;
 
 /**
@@ -46,6 +54,7 @@ public class ProfileFragment extends Fragment {
 
     View inflatedView = null;
     String userID;
+    byte[] profilePicture;
 
     ImageView profileImage;
 
@@ -54,6 +63,9 @@ public class ProfileFragment extends Fragment {
 
     // firebase user information storage
     FirebaseFirestore fStore;
+
+    // firebase storage (post images)
+    StorageReference storageRef;
 
     public ProfileFragment(){
 
@@ -92,16 +104,19 @@ public class ProfileFragment extends Fragment {
 
         Button logout = inflatedView.findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view){
-                Log.d("PRINT", "ENTER register");
+                // remove SharedPreferences user info
                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences("com.example.sayyes", Context.MODE_PRIVATE);
                 sharedPreferences.edit().remove("email").apply();
                 sharedPreferences.edit().remove("password").apply();
+                // go to MainActivity
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 intent.putExtra("autoLogin", "NO");
                 startActivity(intent);
             }
+
         });
 
         // firebase authentication
@@ -110,9 +125,10 @@ public class ProfileFragment extends Fragment {
         // firebase storage
         fStore = FirebaseFirestore.getInstance();
 
+        // firebase storage
+        storageRef = FirebaseStorage.getInstance().getReference();
+
         setUserProfile();
-//        TextView name = (TextView) inflatedView.findViewById(R.id.Name);
-//        name.setText("hello");
 
         return inflatedView;
     }
@@ -131,10 +147,46 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
                 Log.d(TAG, "set profile");
+
                 name.setText(documentSnapshot.getString("name"));
-                //id.setText(userID);
+                id.setText(documentSnapshot.getString("email"));
             }
 
+        });
+    }
+
+    // transform Uri into byte[] for image upload
+    public byte[] getBytes(InputStream inputStream) {
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
+
+        int len = 0;
+        while (true) {
+
+            //try & catch for read
+            try {
+                if (!((len = inputStream.read(buffer)) != -1)) break;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            byteBuffer.write(buffer, 0, len);
+        }
+        return byteBuffer.toByteArray();
+    }
+
+    public void saveProfilePictureInFirebase(){
+        // store images in storage
+        StorageReference imageRef = storageRef.child(userID + ".jpg");
+        UploadTask uploadTask = imageRef.putBytes(profilePicture);
+        uploadTask.addOnFailureListener((exception) -> {
+            Log.d("PRINT", "no post saved");
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Log.i("PRINT", "image post saved successfully");
+            }
         });
     }
 
@@ -151,6 +203,19 @@ public class ProfileFragment extends Fragment {
                         Uri imageUri = data.getData();
 
                         profileImage.setImageURI(imageUri);
+
+                        InputStream iStream = null;
+
+                        // try & catch for openInputStream
+                        try {
+                            iStream = getActivity().getContentResolver().openInputStream(imageUri);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+
+                        profilePicture = getBytes(iStream);
+
+                        saveProfilePictureInFirebase();
                     } else{
                         // cancelled activity
                         Toast.makeText(getActivity(), "Cancelled picking from gallery.", Toast.LENGTH_SHORT).show();

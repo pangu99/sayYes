@@ -7,17 +7,15 @@ import java.util.List;
 
 public class Post {
     private String postID;
-    private byte[] postImage;
     private String postTitle;
     private String postStory;
     private List<String> postHashtags;
     private Boolean isHome;
     private String locationDescription;
 
-    public Post(String postID, byte[] postImage, String postTitle, String postStory, List<String> postHashtags,
+    public Post(String postID, String postTitle, String postStory, List<String> postHashtags,
                 Boolean isHome, String locationDescription){
         this.postID = postID;
-        this.postImage = postImage;
         this.postTitle = postTitle;
         this.postStory = postStory;
         this.postHashtags = postHashtags;
@@ -32,14 +30,6 @@ public class Post {
 
     public void setPostID(String postID) {
         this.postID = postID;
-    }
-
-    public byte[] getPostImage() {
-        return postImage;
-    }
-
-    public void setPostImage(byte[] postImage) {
-        this.postImage = postImage;
     }
 
     public String getPostTitle() {
