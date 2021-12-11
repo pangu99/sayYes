@@ -9,6 +9,7 @@ public class Post {
     private String postID;
     private String postTitle;
     private String postStory;
+    private Integer postLiked;
     private List<String> postHashtags;
     private Boolean isHome;
     private String locationDescription;
@@ -21,6 +22,7 @@ public class Post {
         this.postHashtags = postHashtags;
         this.isHome = isHome;
         this.locationDescription = locationDescription;
+        this.postLiked = 0;
         Log.d("PRINT", "POST object created");
     }
 
@@ -70,5 +72,13 @@ public class Post {
 
     public void setLocationDescription(String locationDescription) {
         this.locationDescription = locationDescription;
+    }
+
+    public Integer getPostLiked() {
+        return postLiked;
+    }
+
+    public void incrementPostLiked() {
+        this.postLiked++;
     }
 }
