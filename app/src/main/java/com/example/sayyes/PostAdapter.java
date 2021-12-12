@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,8 +25,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
-
-    final long ONE_MEGABYTE = 1024 * 1024;
 
     public Context mContext;
     public List<Post> mPost;
@@ -49,44 +48,28 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         Post post = mPost.get(i);
 
-        String userID = firebaseUser.getUid();
-
-        // fetch post picture
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        StorageReference postPicRef = storageReference.child(userID + ".jpg");
-
-        postPicRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes){
-                String s = null;
-                try {
-                    s = new String(bytes, "UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                Uri uri = Uri.parse(s);
-                viewHolder.post_image.setImageURI(uri);
-
-                if (post.getPostTitle().equals("")){
-                    viewHolder.post_title.setVisibility(View.GONE);
-                }
-                else{
-                    viewHolder.post_title.setVisibility(View.VISIBLE);
-                    viewHolder.post_title.setText(post.getPostTitle());
-                }
-
-            }
-        }).addOnFailureListener((exception) -> {
-            exception.printStackTrace();
-            Log.i("Error", "Profile image downloaded error");
-        });
-
+        Glide.with(mContext).load(post.getPostImage()).into(viewHolder.post_image);
+        if (post.getPostTitle().equals("")){
+            viewHolder.post_title.setVisibility(View.GONE);
+        }
+        else{
+            viewHolder.post_title.setVisibility(View.VISIBLE);
+            viewHolder.post_title.setText(post.getPostTitle());
+        }
 
     }
 
     @Override
     public int getItemCount() {
-        return mPost.size();
+        int retval;
+
+        if (mPost != null && !mPost.isEmpty()) {
+            retval = mPost.size();
+        }
+        else{
+            retval = 0;
+        }
+        return retval;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

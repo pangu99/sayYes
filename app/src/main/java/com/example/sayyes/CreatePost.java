@@ -212,7 +212,7 @@ public class CreatePost extends AppCompatActivity {
 
                         Log.i("PRINT", "OVER FirebaseDatabase");
 
-                        DatabaseReference reference = db.getReference();
+                        DatabaseReference reference = db.getReference("Posts");
 
                         Log.i("PRINT", "OVER DatabaseReference");
 
@@ -237,11 +237,12 @@ public class CreatePost extends AppCompatActivity {
                         hashMap.put("isHome", isHome);
                         hashMap.put("locationDescription", locationDescription);
 
-                        reference.child(postid).setValue(hashMap);
+                        //reference.child(postid).setValue(hashMap);
+                        reference.child("postid").setValue("hashMap");
 
                         progressDialog.dismiss();
 
-                        Log.i("PRINT", "SEND successfully");
+                        Log.i("PRINT", "SEND successfully " + postid);
 
                         startActivity(new Intent(CreatePost.this, HomeActivity.class));
 

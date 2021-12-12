@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/relativeLayout"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".HomeFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_height="wrap_content"
@@ -18,53 +18,54 @@ tools:context=".HomeFragment">
             android:layout_height="wrap_content"
             android:id="@+id/toolbar">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/windowBackground">
-
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_centerInParent="true"
-                android:orientation="horizontal"
-                android:weightSum="10">
+                android:background="?android:attr/windowBackground">
 
-                <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="7"
-                    android:background="@drawable/button_layout"
-                    android:onClick="toHome"
-                    android:text="Explore"
-                    android:textColor="@color/black"
-                    android:textSize="20dp" />
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="90dp"
-                    android:layout_marginTop="-10dp"
-                    android:layout_weight="1"
-                    android:onClick="toSearch"
-                    android:paddingLeft="20dp"
-                    app:srcCompat="@drawable/search" />
+                    <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="7"
+                        android:background="@drawable/button_layout"
+                        android:onClick="toHome"
+                        android:text="Explore"
+                        android:textColor="@color/black"
+                        android:textSize="20dp" />
 
-            </LinearLayout>
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="90dp"
+                        android:layout_marginTop="-10dp"
+                        android:layout_weight="1"
+                        android:onClick="toSearch"
+                        android:paddingLeft="20dp"
+                        app:srcCompat="@drawable/search" />
 
-        </RelativeLayout>
+                </LinearLayout>
+
+            </RelativeLayout>
 
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/bar"
-        android:id="@+id/recycler_view">
+        app:layoutManager="LinearLayoutManager" />
 
-    </androidx.recyclerview.widget.RecyclerView>
+    <!--    </androidx.recyclerview.widget.RecyclerView>-->
 
 </RelativeLayout>

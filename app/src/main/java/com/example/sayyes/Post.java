@@ -9,15 +9,17 @@ public class Post {
     private String postID;
     private String postTitle;
     private String postStory;
+    private String postImage;
     private Integer postLiked;
     private List<String> postHashtags;
     private Boolean isHome;
     private String locationDescription;
 
-    public Post(String postID, String postTitle, String postStory, List<String> postHashtags,
+    public Post(String postID, String postTitle, String postImage, String postStory, List<String> postHashtags,
                 Boolean isHome, String locationDescription){
         this.postID = postID;
         this.postTitle = postTitle;
+        this.postImage = postImage;
         this.postStory = postStory;
         this.postHashtags = postHashtags;
         this.isHome = isHome;
@@ -41,6 +43,8 @@ public class Post {
     public void setPostTitle(String postTitle) {
         this.postTitle = postTitle;
     }
+
+    public String getPostImage(){ return postImage; }
 
     public String getPostStory() {
         return postStory;

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
+    private DatabaseReference reference;
     private RecyclerView recyclerView;
     private PostAdapter postAdapter;
     private List<Post> postList;
@@ -43,34 +45,37 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home_page, container, false);
-
-        recyclerView = view.findViewById(R.id.recycler_view);
+        // Inflate the layout for this fragment
+        View fragmentView = inflater.inflate(R.layout.fragment_home_page, container, false);
+        recyclerView = fragmentView.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setReverseLayout(true);
-        linearLayoutManager.setStackFromEnd(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        postList = new ArrayList<>();
-        postAdapter = new PostAdapter(getContext(), postList);
-        recyclerView.setAdapter(postAdapter);
-        return view;
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        reference = firebaseDatabase.getReference("Posts");
+        return fragmentView ;
     }
 
-    private void readPosts(){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // Get List Posts from the database
+
         reference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                postList.clear();
-                for (DataSnapshot snapshot1: snapshot.getChildren()){
-                    Post post = snapshot1.getValue(Post.class);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                postList = new ArrayList<>();
+                for (DataSnapshot postsnap: dataSnapshot.getChildren()) {
+                    Post post = postsnap.getValue(Post.class);
                     postList.add(post);
                 }
+                postAdapter = new PostAdapter(getActivity(),postList);
+                postAdapter.notifyDataSetChanged();
+                recyclerView.setAdapter(postAdapter);
             }
-
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
