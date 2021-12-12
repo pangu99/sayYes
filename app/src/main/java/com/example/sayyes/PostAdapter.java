@@ -38,7 +38,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         Post post = mPost.get(i);
-        Glide.with(mContext).load(post.getP)
+
 
     }
 
