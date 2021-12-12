@@ -1,45 +1,38 @@
 package com.example.sayyes;
 
-import static android.content.ContentValues.TAG;
-
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
+import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthResult;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.storage.UploadTask;
+import com.google.firebase.storage.StorageTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -48,9 +41,19 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class CreatePost extends AppCompatActivity {
+
+    // firebase authentication
+    FirebaseAuth fAuth;
+
+    String userID;
+    byte[] image;
+
+    Uri postImageUri;
+    String postImage = "";
+    StorageTask uploadTask;
+    StorageReference storageReference;
 
     ImageView imageView;
     TextInputEditText title;
@@ -58,32 +61,38 @@ public class CreatePost extends AppCompatActivity {
     TextInputEditText hashtag;
     CheckBox isHomeCheck;
     TextInputEditText specification;
-
-    // firebase authentication
-    FirebaseAuth fAuth;
-
-    // firebase database (users & posts)
-    FirebaseFirestore fStore;
-
-    // firebase storage (post images)
-    StorageReference storageRef;
-
-    // User UID for user information storage
-    String userID;
-
-    // post information
-    private String postID;
-    private byte[] postImage;
-    private String postTitle;
-    private String postStory;
-    private List<String> postHashtags;
-    private Boolean isHome;
-    private String locationDescription;
+    Button postButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_post);
+
+        // get storage reference
+        storageReference = FirebaseStorage.getInstance().getReference("posts");
+
+        // firebase authentication
+        fAuth = FirebaseAuth.getInstance();
+
+        // transform text input
+        title = (TextInputEditText) findViewById(R.id.title);
+
+        story = (TextInputEditText) findViewById(R.id.story);
+
+        hashtag = (TextInputEditText) findViewById(R.id.hashtag);
+
+        isHomeCheck = findViewById(R.id.CheckAtHome);;
+
+        specification = (TextInputEditText) findViewById(R.id.specification);
+
+        postButton = findViewById(R.id.postButton);
+
+        postButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                uploadImage();
+            }
+        });
 
         imageView = findViewById(R.id.Image);
 
@@ -100,26 +109,10 @@ public class CreatePost extends AppCompatActivity {
             }
         });
 
-        // firebase authentication
-        fAuth = FirebaseAuth.getInstance();
+        // get current userID from authentication
+        userID = fAuth.getCurrentUser().getUid();
 
-        // firebase cloud database
-        fStore = FirebaseFirestore.getInstance();
-
-        // firebase storage
-        storageRef = FirebaseStorage.getInstance().getReference();
-
-        // transform text input
-        title = (TextInputEditText) findViewById(R.id.title);
-
-        story = (TextInputEditText) findViewById(R.id.story);
-
-        hashtag = (TextInputEditText) findViewById(R.id.hashtag);
-
-        isHomeCheck = findViewById(R.id.CheckAtHome);;
-
-        specification = (TextInputEditText) findViewById(R.id.specification);
-
+        Log.i("PRINT", "ENTER onCreate");
     }
 
     private ActivityResultLauncher<Intent> openGalleryActivityLauncher = registerForActivityResult(
@@ -145,7 +138,7 @@ public class CreatePost extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        postImage = getBytes(iStream);
+                        image = getBytes(iStream);
                     } else{
                         // cancelled activity
                         Toast.makeText(CreatePost.this, "Cancelled picking from gallery.", Toast.LENGTH_SHORT).show();
@@ -153,84 +146,6 @@ public class CreatePost extends AppCompatActivity {
                 }
             }
     );
-
-
-    // create a Post object and store it into Firebase storage
-    public void postToPublic(View view){
-
-        // get post basic infor
-        postTitle = title.getText().toString();
-        postStory = story.getText().toString();
-        isHome = isHomeCheck.isChecked();
-        locationDescription = specification.getText().toString();
-
-        // process hashtag into arraylist
-        String postHashtags_raw = hashtag.getText().toString();
-        postHashtags = new ArrayList<>();
-        processHashtags(postHashtags_raw);
-
-        // get current userID from authentication
-        userID = fAuth.getCurrentUser().getUid();
-
-        // fetch user data from storage using userID
-        DocumentReference documentReference = fStore.collection("users").document(userID);
-        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
-                String emailStr = documentSnapshot.getString("email");
-                ArrayList<String> postIDs = (ArrayList<String>) documentSnapshot.get("postIDs");
-                Double numPosts = documentSnapshot.getDouble("numPosts");
-                Integer temp = numPosts.intValue();
-                postID = temp.toString();
-
-                sendPost(postID);
-            }
-
-        });
-
-        goToProfileActivity();
-    }
-
-    public void sendPost(String postID){
-        Log.d("PRINT", "sending");
-
-        // store user information into storage
-        userID = fAuth.getCurrentUser().getUid();
-        DocumentReference documentReference = fStore.collection(userID).document(postID);
-        Post post = new Post(postID, postTitle, postStory, postHashtags, isHome, locationDescription);
-
-        // store images in storage
-        StorageReference imageRef = storageRef.child(userID + "_" + postID + ".jpg");
-        UploadTask uploadTask = imageRef.putBytes(postImage);
-        uploadTask.addOnFailureListener((exception) -> {
-            Log.d("PRINT", "no post saved");
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Log.i("PRINT", "image post saved successfully");
-            }
-        });
-
-        //post.put("imageByteArray", postImage);
-        documentReference.set(post).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Log.d(TAG, "onSuccess: user profile is created for " + userID);
-            }
-        });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @androidx.annotation.Nullable Intent data){
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1000){
-            if (resultCode == Activity.RESULT_OK){
-                Uri imageUri = data.getData();
-                imageView.setImageURI(imageUri);
-            }
-        }
-    }
 
     // transform Uri into byte[] for image upload
     public byte[] getBytes(InputStream inputStream) {
@@ -253,22 +168,127 @@ public class CreatePost extends AppCompatActivity {
         return byteBuffer.toByteArray();
     }
 
-    // transform raw hashtags into list of hashtags
-    public void processHashtags(String postHashtags_raw){
+    private  String getFileExtension(Uri uri){
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
 
+    private void uploadImage(){
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Posting");
+        progressDialog.show();
+
+        if (postImageUri != null){
+            Log.i("PRINT", "uri is not null");
+
+            StorageReference fileReference = storageReference.child(System.currentTimeMillis()
+            + "." + getFileExtension(postImageUri));
+
+            uploadTask = fileReference.putFile(postImageUri);
+            uploadTask.continueWithTask(new Continuation() {
+                @Override
+                public Object then(@NonNull Task task) throws Exception {
+                    if (!task.isSuccessful()){
+                        throw task.getException();
+                    }
+
+                    return fileReference.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    Log.i("PRINT", "ENTER onComplete");
+                    if (task.isSuccessful()){
+                        Log.i("PRINT", "ENTER successful");
+
+                        Uri downloadUri = task.getResult();
+                        postImage = downloadUri.toString();
+
+                        Log.i("PRINT", "ENTER database");
+
+//                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
+                        FirebaseDatabase db = FirebaseDatabase.getInstance();
+
+                        Log.i("PRINT", "OVER FirebaseDatabase");
+
+                        DatabaseReference reference = db.getReference();
+
+                        Log.i("PRINT", "OVER DatabaseReference");
+
+                        String postid = reference.push().getKey();
+
+                        // get post basic info
+                        String postTitle = title.getText().toString();
+                        String postStory = story.getText().toString();
+                        Boolean isHome = isHomeCheck.isChecked();
+                        String locationDescription = specification.getText().toString();
+                        List<String> postHashTags = processHashtags(hashtag.getText().toString());
+
+                        Log.i("PRINT", "ENTER hashmap");
+
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("postid", postid);
+                        hashMap.put("userid", userID);
+                        hashMap.put("postImage", postImage);
+                        hashMap.put("postTitle", postStory);
+                        hashMap.put("postStory", postTitle);
+                        hashMap.put("postHashTags", postHashTags);
+                        hashMap.put("isHome", isHome);
+                        hashMap.put("locationDescription", locationDescription);
+
+                        reference.child(postid).setValue(hashMap);
+                        reference.child("postid").setValue("hashMap");
+
+                        progressDialog.dismiss();
+
+                        Log.i("PRINT", "SEND successfully");
+
+                        startActivity(new Intent(CreatePost.this, HomeActivity.class));
+
+                        finish();
+                    } else{
+                        Toast.makeText(CreatePost.this, "Error in sending post.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(CreatePost.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else{
+            Log.i("PRINT", "uri is null");
+            Toast.makeText(CreatePost.this, "Error in sending post!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // transform raw hashtags into list of hashtags
+    public List<String> processHashtags(String postHashtags_raw){
+
+        List<String> res= new ArrayList<>();
         String[] splitted = postHashtags_raw.split("#");
 
         for (String s : splitted){
             if (s==null || s.trim().length()==0)
                 continue;
-            postHashtags.add(s.trim());
+            res.add(s.trim());
         }
+
+        return res;
 
     }
 
-    public void goToProfileActivity(){
-        Intent intent = new Intent(this, ProfileActivity.class);
-        intent.putExtra("updateNum", "Yes");
-        startActivity(intent);
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, @Nullable Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK){
+            postImageUri = data.getData();
+        } else{
+            Toast.makeText(this, "Error getting image.", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(CreatePost.this, HomeActivity.class));
+            finish();
+        }
     }
 }
