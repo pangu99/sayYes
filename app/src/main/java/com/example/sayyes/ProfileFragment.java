@@ -162,6 +162,7 @@ public class ProfileFragment extends Fragment {
         // fetch user profile picture
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         StorageReference profilePicRef = storageReference.child("profilePics/" + userID + ".jpg");
+
         profilePicRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]> () {
             @Override
             public void onSuccess(byte[] bytes){
