@@ -38,8 +38,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         Post post = mPost.get(i);
-
-
+        if (post.getPostTitle().equals("")){
+            viewHolder.post_title.setVisibility(View.GONE);
+        }
+        else{
+            viewHolder.post_title.setVisibility(View.VISIBLE);
+            viewHolder.post_title.setText(post.getPostTitle());
+        }
     }
 
     @Override
