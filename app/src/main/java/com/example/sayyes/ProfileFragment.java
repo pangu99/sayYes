@@ -6,6 +6,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -52,6 +54,8 @@ import java.util.concurrent.Executor;
  * create an instance of this fragment.
  */
 public class ProfileFragment extends Fragment {
+
+    final long ONE_MEGABYTE = 1024 * 1024;
 
     View inflatedView = null;
     String userID;
@@ -155,6 +159,23 @@ public class ProfileFragment extends Fragment {
 
         });
 
+        // fetch user profile picture
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference profilePicRef = storageReference.child("profilePics/" + userID + ".jpg");
+        profilePicRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]> () {
+            @Override
+            public void onSuccess(byte[] bytes){
+                // 4. data for profile image is returned - get this into a bitmap object
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+                // 5. set the image in imageView
+                profileImage.setImageBitmap(bitmap);
+            }
+        }).addOnFailureListener((exception) -> {
+            exception.printStackTrace();
+            Log.i("Error", "Profile image downloaded error");
+        });
+
     }
 
     // transform Uri into byte[] for image upload
@@ -180,7 +201,7 @@ public class ProfileFragment extends Fragment {
 
     public void saveProfilePictureInFirebase(){
         // store images in storage
-        StorageReference imageRef = storageRef.child(userID + ".jpg");
+        StorageReference imageRef = storageRef.child("profilePics/" + userID + ".jpg");
         UploadTask uploadTask = imageRef.putBytes(profilePicture);
         uploadTask.addOnFailureListener((exception) -> {
             Log.d("PRINT", "no post saved");
