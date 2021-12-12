@@ -212,7 +212,7 @@ public class CreatePost extends AppCompatActivity {
 
                         Log.i("PRINT", "OVER FirebaseDatabase");
 
-                        DatabaseReference reference = db.getReference();
+                        DatabaseReference reference = db.getReference("Posts");
 
                         Log.i("PRINT", "OVER DatabaseReference");
 
