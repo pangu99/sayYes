@@ -238,7 +238,6 @@ public class CreatePost extends AppCompatActivity {
                         hashMap.put("locationDescription", locationDescription);
 
                         reference.child(postid).setValue(hashMap);
-                        reference.child("postid").setValue("hashMap");
 
                         progressDialog.dismiss();
 
