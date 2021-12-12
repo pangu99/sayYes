@@ -201,7 +201,7 @@ public class CreatePost extends AppCompatActivity {
         Post post = new Post(postID, postTitle, postStory, postHashtags, isHome, locationDescription);
 
         // store images in storage
-        StorageReference imageRef = storageRef.child(postID + ".jpg");
+        StorageReference imageRef = storageRef.child(userID + "_" + postID + ".jpg");
         UploadTask uploadTask = imageRef.putBytes(postImage);
         uploadTask.addOnFailureListener((exception) -> {
             Log.d("PRINT", "no post saved");
