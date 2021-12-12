@@ -7,190 +7,64 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context=".HomeFragment">
 
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/bar"
+        android:background="?android:attr/windowBackground">
 
-    <LinearLayout
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/toolbar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/windowBackground">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:background="@drawable/button_layout"
+                    android:onClick="toHome"
+                    android:text="Explore"
+                    android:textColor="@color/black"
+                    android:textSize="20dp" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="90dp"
+                    android:layout_marginTop="-10dp"
+                    android:layout_weight="1"
+                    android:onClick="toSearch"
+                    android:paddingLeft="20dp"
+                    app:srcCompat="@drawable/search" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="0dp"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:layout_below="@+id/bar"
+        android:id="@+id/recycler_view">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:weightSum="10">
-
-            <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Explore"
-                android:textSize="20dp"
-                android:layout_weight="7"
-                android:textColor="@color/black"
-                android:background="@drawable/button_layout"
-                android:onClick="toHome"/>
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="90dp"
-                android:layout_weight="1"
-                android:paddingLeft="20dp"
-                android:layout_marginTop="-10dp"
-                app:srcCompat="@drawable/search"
-                android:onClick="toSearch"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/firstRowImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="10">
-
-            <ImageView
-                android:id="@+id/image1"
-                android:layout_width="0dp"
-                android:layout_height="160dp"
-                android:layout_weight="5"
-                app:srcCompat="@drawable/proposal2" />
-
-            <ImageView
-                android:id="@+id/image2"
-                android:layout_width="0dp"
-                android:layout_height="160dp"
-                android:layout_weight="5"
-                app:srcCompat="@drawable/proposal1" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/firstRowText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/firstRowImage"
-            android:orientation="horizontal"
-            android:weightSum="10">
-
-            <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:background="@drawable/button_layout"
-                android:text="Proposal on the lake\n#lake" />
-
-            <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:background="@drawable/button_layout"
-                android:text="Proposal in Madison\n#Madison" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/secondRowImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/firstRowText"
-            android:weightSum="10">
-
-            <ImageView
-                android:id="@+id/image3"
-                android:layout_width="0dp"
-                android:layout_height="160dp"
-                android:layout_weight="5"
-                app:srcCompat="@drawable/proposal3" />
-
-            <ImageView
-                android:id="@+id/image4"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                app:srcCompat="@drawable/proposal4" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/secondRowText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/secondRowImage"
-            android:orientation="horizontal"
-            android:weightSum="10">
-
-            <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:background="@drawable/button_layout"
-                android:text="SHE SAID YEES!\n#romantic" />
-
-            <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:background="@drawable/button_layout"
-                android:text="Surprise proposal\n#surprise" />
-
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/thirdRowImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/secondRowText"
-            android:weightSum="10">
-
-            <ImageView
-                android:id="@+id/image5"
-                android:layout_width="0dp"
-                android:layout_height="160dp"
-                android:layout_weight="5"
-                app:srcCompat="@drawable/proposal5" />
-
-            <ImageView
-                android:id="@+id/image6"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                app:srcCompat="@drawable/proposal6" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/thirdRowText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/thirdRowImage"
-            android:orientation="horizontal"
-            android:weightSum="10">
-
-            <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:background="@drawable/button_layout"
-                android:text="Proposal at disney!\n#dreaming" />
-
-            <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:background="@drawable/button_layout"
-                android:text="Proposal in restaurant\n#yummy" />
-
-        </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+    </androidx.recyclerview.widget.RecyclerView>
 
 </RelativeLayout>
