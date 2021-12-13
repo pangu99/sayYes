@@ -82,13 +82,13 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             protected void populateViewHolder(searchViewHolder viewHolder, search_info model, int position){
-//                List<String> hashList = model.getPostHashtags();
-//                int i;
-//                String hash="";
-//                for(i=0; i<hashList.size(); i++){
-//                    hash = hash+hashList.get(i)+"\n";
-//                }
-                String hash="#";
+                List<String> hashList = model.getPostHashTags();
+                int i;
+                String hash="";
+                for(i=0; i<hashList.size(); i++){
+                    hash = hash+hashList.get(i)+"\n";
+                }
+                //String hash="#";
 
                 //viewHolder.setDetails(getApplicationContext(), model.getPostTitle(), model.getPostImg(), model.getLikeNo(),hash);
                 viewHolder.setDetails(getApplicationContext(), model.getPostTitle(), model.getPostImage(),hash);
