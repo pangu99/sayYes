@@ -9,7 +9,9 @@
         android:id="@+id/search_title"
         android:layout_width="match_parent"
         android:layout_height="33dp"
+        android:background="#DD9BE8"
         android:text="TextView"
+        android:textColor="#070707"
         android:textSize="24sp" />
 
     <ImageView
@@ -23,12 +25,13 @@
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="43dp"
+        android:layout_height="37dp"
         android:layout_below="@+id/search_img"
         android:layout_alignStart="@+id/search_img"
         android:layout_marginStart="355dp"
         android:layout_marginTop="18dp"
+        android:background="#EF0E0E"
         app:srcCompat="@drawable/ic_baseline_thumb_up_24" />
 
     <TextView
@@ -37,8 +40,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageButton"
         android:layout_alignStart="@+id/imageButton"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="8dp"
         android:text="123"
         android:textSize="16sp" />
 
@@ -48,7 +51,9 @@
         android:layout_height="84dp"
         android:layout_below="@+id/search_img"
         android:layout_alignStart="@+id/search_img"
+        android:background="#7BB8E8"
         android:text="###"
+        android:textColor="#0C0C0C"
         android:textSize="20sp" />
 
 </RelativeLayout>
