@@ -20,11 +20,14 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -119,18 +122,34 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    Toast.makeText(RegisterActivity.this, "User Created.", Toast.LENGTH_SHORT).show();
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
 
                     // store user information into storage
                     userID = fAuth.getCurrentUser().getUid();
-                    DocumentReference documentReference = fStore.collection("users").document(userID);
+
+                    List<String> postIDs = new ArrayList<>();
+                    postIDs.add("dummyhead");
+
+                    // hashmap for user info
                     Map<String, Object> user = new HashMap<>();
                     user.put("name", nameStr);
                     user.put("email", emailStr);
-                    user.put("postIDs", new ArrayList<String>());
-                    user.put("numPosts", new Double(0));
-                    //user.put("search", new ArrayList<String>());
-                    documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    user.put("postIDs", postIDs);
+                    user.put("numPosts", new Integer(0));
+
+                    reference.child(userID).setValue(user);
+
+                    Toast.makeText(RegisterActivity.this, "User Created.", Toast.LENGTH_SHORT).show();
+
+//                    // store user information into storage
+//                    userID = fAuth.getCurrentUser().getUid();
+                    DocumentReference documentReference = fStore.collection("users").document(userID);
+                    Map<String, Object> user_h = new HashMap<>();
+                    user_h.put("name", nameStr);
+                    user_h.put("email", emailStr);
+                    user_h.put("postIDs", postIDs);
+                    user_h.put("numPosts", new Double(0));
+                    documentReference.set(user_h).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
                             Log.d(TAG, "onSuccess: user profile is created for " + userID);

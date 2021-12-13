@@ -28,8 +28,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
@@ -238,6 +241,25 @@ public class CreatePost extends AppCompatActivity {
                         hashMap.put("locationDescription", locationDescription);
 
                         reference.child(postid).setValue(hashMap);
+
+                        // update postIDs under the given user
+                        List<String> postIDs = new ArrayList<>();
+                        DatabaseReference reference_user = db.getReference("Users").child(userID).child("postIDs");
+
+                        reference_user.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot data : snapshot.getChildren()){
+                                    postIDs.add(data.getKey());
+                                }
+                                reference_user.child(userID).child("postIDs").setValue(postIDs);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
 
                         progressDialog.dismiss();
 
