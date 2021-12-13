@@ -6,16 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Post {
+    private String userID;
     private String postID;
     private String postTitle;
     private String postStory;
+    private String postImage;
     private Integer postLiked;
     private List<String> postHashtags;
     private Boolean isHome;
     private String locationDescription;
 
-    public Post(String postID, String postTitle, String postStory, List<String> postHashtags,
+    public Post(String userID, String postID, String postTitle, String postStory, List<String> postHashtags,
                 Boolean isHome, String locationDescription){
+        this.userID = userID;
         this.postID = postID;
         this.postTitle = postTitle;
         this.postStory = postStory;
@@ -26,11 +29,23 @@ public class Post {
         Log.d("PRINT", "POST object created");
     }
 
-    public String getPostID() {
+    public Post() {
+
+    }
+
+    public String getUserid() {
+        return userID;
+    }
+
+    public void setUserid(String userID) {
+        this.userID = userID;
+    }
+
+    public String getPostid() {
         return postID;
     }
 
-    public void setPostID(String postID) {
+    public void setPostid(String postID) {
         this.postID = postID;
     }
 
@@ -42,6 +57,14 @@ public class Post {
         this.postTitle = postTitle;
     }
 
+    public String getPostImage() {
+        return postImage;
+    }
+
+    public void setPostImage(String postImage) {
+        this.postImage = postImage;
+    }
+
     public String getPostStory() {
         return postStory;
     }
@@ -50,19 +73,19 @@ public class Post {
         this.postStory = postStory;
     }
 
-    public List<String> getPostHashtags() {
+    public List<String> getPostHashTags() {
         return postHashtags;
     }
 
-    public void setPostHashtags(List<String> postHashtags) {
+    public void setPostHashTags(List<String> postHashtags) {
         this.postHashtags = postHashtags;
     }
 
-    public Boolean getHome() {
+    public Boolean getIsHome() {
         return isHome;
     }
 
-    public void setHome(Boolean home) {
+    public void setIsHome(Boolean home) {
         isHome = home;
     }
 

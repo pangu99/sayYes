@@ -63,6 +63,36 @@
 
 
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/profileButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:weightSum="10">
 
+        <Button
+            android:id="@+id/posts"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:layout_marginHorizontal="4dp"
+            android:text="posts" />
+        <Button
+            android:id="@+id/likes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:layout_marginHorizontal="4dp"
+            android:text="likes" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/profileButtons"
+        android:layout_marginTop="24dp"
+        android:id="@+id/profileRecycler">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 </RelativeLayout>

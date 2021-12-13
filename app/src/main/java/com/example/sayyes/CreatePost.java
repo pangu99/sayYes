@@ -244,6 +244,7 @@ public class CreatePost extends AppCompatActivity {
 
                         // update postIDs under the given user
                         List<String> postIDs = new ArrayList<>();
+                        postIDs.add(postid);
                         DatabaseReference reference_user = db.getReference("Users").child(userID).child("postIDs");
 
                         reference_user.addValueEventListener(new ValueEventListener() {
@@ -252,6 +253,7 @@ public class CreatePost extends AppCompatActivity {
                                 for (DataSnapshot data : snapshot.getChildren()){
                                     postIDs.add(data.getKey());
                                 }
+
                                 reference_user.child(userID).child("postIDs").setValue(postIDs);
                             }
 

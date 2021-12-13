@@ -78,7 +78,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             }
         }).addOnFailureListener((exception) -> {
             exception.printStackTrace();
-            Log.i("Error", "Profile image downloaded error");
+            Log.i("Error", "Post image downloaded error");
         });
 
 

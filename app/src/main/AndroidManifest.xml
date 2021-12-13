@@ -18,9 +18,6 @@
             android:name=".SearchActivity"
             android:exported="true" />
         <activity
-            android:name=".ProfileActivity"
-            android:exported="true" />
-        <activity
             android:name=".RegisterActivity"
             android:exported="true" />
         <activity
